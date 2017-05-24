@@ -2,29 +2,26 @@
 class IDA
 {
 public:
-	IDA();
+	IDA(int *a, int *r);
 	~IDA();
-	void input(int * a);
+	void input(int * a, int * r);
 	void solve();
+	void output();
+	void reset();
 private:
-	int * puzzle;
-	int manhattan[9][9] =
-	{
-		{2,1,2,1,0,1,2,1,2},
-		{0,1,2,1,2,3,2,3,4},
-		{1,0,1,2,1,2,3,2,3},
-		{2,1,0,3,2,1,4,3,2},
-		{3,2,1,2,1,0,3,2,1},
-		{4,3,2,3,2,1,2,1,0},
-		{3,2,3,2,1,2,1,0,1},
-		{2,3,4,1,2,3,0,1,2},
-		{1,2,3,0,1,2,1,2,3},
-	};
+	int * puzzle, *target;
+	long long result;
+	int manhattan[9][9];
 	bool solved = false;
 	int limit;
-	bool ida(long long status, int depth, int dis);
+	stack<long long> out;
+	bool ida(long long status, int depth, int dis, long long last);
+	void genManhattan();
 	int distance(long long p);
 	void check();
-	long long genLong();
+	void checkPuzzle(int *p);
+	long long genLong(int * p);
+	int * genArray(long long p);
+	void output(long long p);
 };
 

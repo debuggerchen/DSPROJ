@@ -3,22 +3,25 @@
 class EightPuzzle
 {
 public:
-	EightPuzzle();
+	EightPuzzle(int *a, int *r);
 	~EightPuzzle();
-	void input(int *a);
+	void input(int *a,int *r);
 	void solve();
 	void output();
-	void release();
+	void reset();
 private:
-	int *puzzle;
+	int *puzzle, *target;
+	long long result;
 	bool solved = false;
+	stack<long long> out;
 	queue<long long> toCheck;
 	unordered_set<long long> checked;
 	unordered_map<long long,long long> path;
 	void check();
+	void checkPuzzle(int *p);
 	void swapAndAdd(long long p);
 	void addToQueue(long long o,long long p);
-	long long genInt(int *p);
+	long long genLong(int *p);
 	int * genArray(long long p);
 	void output(long long p);
 };

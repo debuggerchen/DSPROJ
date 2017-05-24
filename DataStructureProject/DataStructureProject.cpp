@@ -3,9 +3,21 @@
 
 #include "stdafx.h"
 #include "EightPuzzle.h"
-#include "BiSearch.h"
+#include "DBFS.h"
 #include "IDA.h"
+#include "Astar.h"
+#include <windows.h>
+#include <psapi.h>
+#pragma comment(lib,"psapi.lib")
 
+size_t before,after;
+HANDLE handle;
+PROCESS_MEMORY_COUNTERS pmc;
+size_t getCurrentMem() {
+	handle = GetCurrentProcess();
+	GetProcessMemoryInfo(handle, &pmc, sizeof(pmc));
+	return pmc.WorkingSetSize;
+}
 int main()
 {
 	int * puzzle = new int[9];
@@ -13,42 +25,75 @@ int main()
 	for (int i = 0; i < 9; i++) {
 		cin >> puzzle[i];
 	}
-	EightPuzzle e;
-	e.input(puzzle);
-	clock_t start, end;
-	cout << "BFS + Hash Search Start" << endl;
-	start = clock();
-	e.solve();
-	end = clock();
-	cout << "Search Finish In " << end - start << " ms" << endl;
-	cout << "Path is shown below" << endl;
-	e.output();
-	e.release();
-	cout << "BFS + Hash Search Finish" << endl;
-	cout << endl;
-	BiSearch b;
-	b.input(puzzle);
-	clock_t start2, end2;
-	cout << "DBFS Start" << endl;
-	start2 = clock();
-	b.solve();
-	end2 = clock();
-	cout << "Search Finish In " << end2 - start2 << " ms" << endl;
-	b.output();
-	b.release();
-	cout << "DBFS Finish" << endl << endl;
+	int * target = new int[9];
+	cout << "Please Enter Target" << endl;
+	for (int i = 0; i < 9; i++) {
+		cin >> target[i];
+	}
+	try
+	{
+		
+		EightPuzzle *e = new EightPuzzle(puzzle, target);
+		cout << "BFS + Hash Search Start" << endl;
+		clock_t start, end;
+		before = getCurrentMem();
+		start = clock();
+		e->solve();
+		end = clock();
+		after = getCurrentMem();
+		cout << "Search Finish In " << end - start << " ms" << endl;
+		cout << "Mem Usage: " << ((after - before) >> 10) << "K" << endl;
+		cout << "Path is shown below" << endl;
+		e->output();
+		//e.release();
+		delete e;
+		cout << "BFS + Hash Search Finish" << endl;
+		cout << endl;
+		DBFS *b = new DBFS(puzzle, target);
+		cout << "DBFS Start" << endl;
+		before = getCurrentMem();
+		start = clock();
+		b->solve();
+		end = clock();
+		after = getCurrentMem();
+		cout << "Search Finish In " << end - start << " ms" << endl;
+		cout << "Mem Usage: " << ((after - before) >> 10) << "K" << endl;
+		b->output();
+		delete b;
+		cout << "DBFS Finish" << endl << endl;
 
-	IDA i;
-	i.input(puzzle);
-	clock_t start3, end3;
-	cout << "IDA* Start" << endl;
-	start3 = clock();
-	i.solve();
-	end3 = clock();
-	cout << "Search Finish In " << end3 - start3 << " ms" << endl;
-	cout << "IDA* Finish" << endl << endl; 
+		IDA *i = new IDA(puzzle, target);
+		cout << "IDA* Start" << endl;
+		start = clock();
+		i->solve();
+		end = clock();
+		cout << "Search Finish In " << end - start << " ms" << endl;
+		i->output();
+		delete i;
+		cout << "IDA* Finish" << endl << endl;
 
-
+		Astar *a = new Astar(puzzle, target);
+		cout << "A* Start" << endl;
+		before = getCurrentMem();
+		start = clock();
+		a->solve();
+		end = clock();
+		after = getCurrentMem();
+		cout << "Search Finish In " << end - start << " ms" << endl;
+		cout << "Mem Usage: " << ((after - before) >> 10) << "K" << endl;
+		a->output();
+		//b.release();
+		cout << "A* Finish" << endl << endl;
+		delete a;
+		delete puzzle;
+		delete target;
+	}
+	catch (...)
+	{
+		cout << "Error!" << endl;
+	}
+	
+	system("pause");
     return 0;
 }
 

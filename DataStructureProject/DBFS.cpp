@@ -1,42 +1,35 @@
 #include "stdafx.h"
-#include "BiSearch.h"
-#define result 4890576741
+#include "DBFS.h"
+//#define result 4890576741
 
 
-BiSearch::BiSearch()
+DBFS::DBFS(int *a, int *r)
 {
+	input(a, r);
 }
 
 
-BiSearch::~BiSearch()
+DBFS::~DBFS()
 {
-	while (!toCheck.empty()) {
-		toCheck.pop();
-	}
-
-	while (!reverseToCheck.empty()) {
-		reverseToCheck.pop();
-	}
-	checked.clear();
-	reverseChecked.clear();
-
-	path.clear();
-	path2.clear();
-
+	reset();
 }
 
-void BiSearch::input(int * a)
+void DBFS::input(int * a, int * r)
 {
+	checkPuzzle(a);
+	checkPuzzle(r);
 	puzzle = a;
+	target = r;
 }
 
-void BiSearch::solve()
+void DBFS::solve()
 {
 	check();
 	if (!solved)
 		return;
 	solved = false;
-	long long p = genInt(puzzle);
+	result = genLong(target);
+	long long p = genLong(puzzle);
 	addToQueue(-1, p);
 	addToQueue2(-1, result);
 	while (!solved) {
@@ -58,9 +51,9 @@ void BiSearch::solve()
 	}
 }
 
-void BiSearch::check()
+void DBFS::check()
 {
-	int k = 0;
+	int k = 0, m = 0;
 	for (int i = 0; i < 9; i++) {
 		if (puzzle[i] == 0)
 			continue;
@@ -69,13 +62,23 @@ void BiSearch::check()
 				k++;
 		}
 	}
-	if (k % 2 == 0)
-		solved = false;
-	else
+	
+	for (int i = 0; i < 9; i++) {
+		if (target[i] == 0)
+			continue;
+		for (int j = 0; j < i; j++) {
+			if (target[j] > target[i])
+				m++;
+		}
+	}
+
+	if (k % 2 == m % 2)
 		solved = true;
+	else
+		solved = false;
 }
 
-void BiSearch::output()
+void DBFS::output()
 {
 	if (solved)
 	{
@@ -83,14 +86,26 @@ void BiSearch::output()
 		long long now = fEnd;
 		do {
 			i++;
+			out.push(now);
 			now = path[now];
 		} while (now != -1);
+
+		while (!out.empty()) {
+			output(out.top());
+			out.pop();
+			cout << "  ¡ý" << endl;
+			cout << endl;
+		}
 		now = reverseEnd;
+		
 		do {
 			j++;
+			output(now);
+			cout << "  ¡ý" << endl;
+			cout << endl;
 			now = path2[now];
 		} while (now != -1);
-
+		cout << "End" << endl;
 		cout << "Solved With " << i+j+1 << " Steps" << endl;
 	}
 	else {
@@ -98,24 +113,35 @@ void BiSearch::output()
 	}
 }
 
-void BiSearch::release()
+void DBFS::reset()
 {
 	while (!toCheck.empty()) {
 		toCheck.pop();
 	}
+
 	while (!reverseToCheck.empty()) {
 		reverseToCheck.pop();
 	}
+
+	while (!out.empty()) {
+		out.pop();
+	}
 	checked.clear();
 	reverseChecked.clear();
+
 	path.clear();
 	path2.clear();
-	//Consider
 
+	solved = false;
+	puzzle = nullptr;
+	target = nullptr;
+	result = 0;
+	fEnd = 0;
+	reverseEnd = 0;
 }
 
 
-void BiSearch::swapAndAdd(long long p)
+void DBFS::swapAndAdd(long long p)
 {
 	long long i, j = 0;
 	for (i = 15; (i&p) != 0; i = i << 4, j++);
@@ -156,7 +182,7 @@ void BiSearch::swapAndAdd(long long p)
 
 }
 
-void BiSearch::swapAndAdd2(long long p)
+void DBFS::swapAndAdd2(long long p)
 {
 	long long i, j = 0;
 	for (i = 15; (i&p) != 0; i = i << 4, j++);
@@ -197,7 +223,7 @@ void BiSearch::swapAndAdd2(long long p)
 
 }
 
-void BiSearch::addToQueue(long long o, long long p)
+void DBFS::addToQueue(long long o, long long p)
 {
 	if (checked.find(p) == checked.end())
 	{
@@ -217,7 +243,7 @@ void BiSearch::addToQueue(long long o, long long p)
 	}
 }
 
-void BiSearch::addToQueue2(long long o, long long p)
+void DBFS::addToQueue2(long long o, long long p)
 {
 	if (reverseChecked.find(p) == reverseChecked.end())
 	{
@@ -237,7 +263,30 @@ void BiSearch::addToQueue2(long long o, long long p)
 
 }
 
-long long BiSearch::genInt(int * p)
+void DBFS::checkPuzzle(int * p)
+{
+	bool test[9];
+
+	for (int i = 0; i < 9; i++) {
+		test[i] = false;
+	}
+
+	for (int i = 0; i < 9; i++) {
+		if (p[i] > -1 && p[i] < 9) {
+			if (test[p[i]]) {
+				throw PuzzleException(NUM_DUPLICATED);
+			}
+			else {
+				test[p[i]] = true;
+			}
+		}
+		else {
+			throw PuzzleException(NUM_INVALID);
+		}
+	}
+}
+
+long long DBFS::genLong(int * p)
 {
 	//x64 int
 	long long status = 0;
@@ -248,7 +297,7 @@ long long BiSearch::genInt(int * p)
 	return status;
 }
 
-int * BiSearch::genArray(long long p)
+int * DBFS::genArray(long long p)
 {
 	int *ptr = new int[9];
 
@@ -260,11 +309,14 @@ int * BiSearch::genArray(long long p)
 	return ptr;
 }
 
-void BiSearch::output(long long p)
+void DBFS::output(long long p)
 {
 	int * a = genArray(p);
 	for (int i = 0; i < 9; i++) {
-		cout << a[i] << " ";
+		if (a[i] > 0)
+			cout << a[i] << " ";
+		else
+			cout << "  ";
 		if (i % 3 == 2)
 			cout << endl;
 	}

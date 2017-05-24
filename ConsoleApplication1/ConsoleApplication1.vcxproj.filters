@@ -24,42 +24,12 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="EightPuzzle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IDA.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Astar.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PuzzleException.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DBFS.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DataStructureProject.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="EightPuzzle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IDA.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Astar.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PuzzleException.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DBFS.cpp">
+    <ClCompile Include="ConsoleApplication1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
