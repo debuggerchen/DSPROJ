@@ -36,6 +36,7 @@ void DBFS::solve()
 		if (!toCheck.empty()) {
 			long long next = toCheck.front();
 			toCheck.pop();
+			visit++;
 			swapAndAdd(next);
 		}
 		else {
@@ -45,6 +46,7 @@ void DBFS::solve()
 		if (!reverseToCheck.empty()) {
 			long long next = reverseToCheck.front();
 			reverseToCheck.pop();
+			visit++;
 			swapAndAdd2(next);
 		}
 
@@ -113,6 +115,36 @@ void DBFS::output()
 	}
 }
 
+int DBFS::getSteps()
+{
+	if (solved)
+	{
+		int i = -1, j = -1;
+		long long now = fEnd;
+		do {
+			i++;
+			now = path[now];
+		} while (now != -1);
+
+		now = reverseEnd;
+
+		do {
+			j++;
+			now = path2[now];
+		} while (now != -1);
+		
+		return i + j + 1;
+	}
+	else {
+		return -1;
+	}
+}
+
+int DBFS::getVisit()
+{
+	return visit;
+}
+
 void DBFS::reset()
 {
 	while (!toCheck.empty()) {
@@ -138,6 +170,7 @@ void DBFS::reset()
 	result = 0;
 	fEnd = 0;
 	reverseEnd = 0;
+	visit = 0;
 }
 
 

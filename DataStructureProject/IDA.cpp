@@ -40,7 +40,9 @@ void IDA::output()
 {
 	if (solved)
 	{
+		int i = -1;
 		while (!out.empty()) {
+			++i;
 			output(out.top());
 			out.pop();
 			cout << "  ¡ý" << endl;
@@ -48,10 +50,32 @@ void IDA::output()
 		}
 		cout << "End" << endl;
 		cout << endl;
+		cout << "Solved With " << i << " Steps" << endl;
 	}
 	else {
 		cout << "No Such Path" << endl;
 	}
+}
+
+int IDA::getSteps()
+{
+	if (solved)
+	{
+		int i = -1;
+		while (!out.empty()) {
+			++i;
+			out.pop();
+		}
+		return i;
+	}
+	else {
+		return -1;
+	}
+}
+
+int IDA::getVisit()
+{
+	return visit;
 }
 
 void IDA::reset()
@@ -63,17 +87,18 @@ void IDA::reset()
 	solved = false;
 	limit = 0;
 	result = 0;
+	visit = 0;
 	puzzle = nullptr;
 	target = nullptr;
 }
 
 bool IDA::ida(long long status, int depth, int dis, long long last)
 {
+	visit++;
 	if (status == result)
 	{
 		out.push(status);
 		solved = true;
-		cout << "Solved in " << depth << " steps" << endl;
 		return true;
 	}
 

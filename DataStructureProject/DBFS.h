@@ -7,9 +7,12 @@ public:
 	void input(int *a, int * r);
 	void solve();
 	void output();
+	int getSteps();
+	int getVisit();
 	void reset();
 private:
 	int *puzzle, *target;
+	int visit = 0;
 	long long result;
 	long long fEnd, reverseEnd;
 	bool solved = false;

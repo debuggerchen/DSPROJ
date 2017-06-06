@@ -45,7 +45,7 @@ void Astar::solve()
 			solved = true;
 			break;
 		}
-		
+		visit++;
 		swapAndSet(now);
 	}
 
@@ -85,6 +85,29 @@ void Astar::output()
 	}
 }
 
+int Astar::getSteps()
+{
+	if (solved)
+	{
+		int i = -1;
+		long long now = result;
+		do {
+			i++;
+			now = path[now];
+		} while (now != -1);
+	
+		return i;
+	}
+	else {
+		return -1;
+	}
+}
+
+int Astar::getVisit()
+{
+	return visit;
+}
+
 void Astar::reset()
 {
 	while (!out.empty()) {
@@ -92,17 +115,21 @@ void Astar::reset()
 	}
 
 	while (!open.empty()) {
+		state *p = open.top();
 		open.pop();
+		delete p;
 	}
 
 	close.clear();
 	inopen.clear();
+	inopen.rehash(1024);
 	path.clear();
 
 	solved = false;
 	puzzle = nullptr;
 	target = nullptr;
 	result = 0;
+	visit = 0;
 }
 
 void Astar::check()

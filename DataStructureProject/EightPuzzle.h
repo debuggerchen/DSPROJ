@@ -9,8 +9,11 @@ public:
 	void solve();
 	void output();
 	void reset();
+	int getSteps();
+	int getVisit();
 private:
 	int *puzzle, *target;
+	int visit = 0;
 	long long result;
 	bool solved = false;
 	stack<long long> out;

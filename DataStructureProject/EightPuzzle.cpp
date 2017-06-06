@@ -37,6 +37,7 @@ void EightPuzzle::solve()
 		}
 		long long next = toCheck.front();
 		toCheck.pop();
+		visit++;
 		swapAndAdd(next);
 	}
 	solved = false;
@@ -91,6 +92,37 @@ void EightPuzzle::reset()
 	puzzle = nullptr;
 	target = nullptr;
 	result = 0;
+	visit = 0;
+}
+
+int EightPuzzle::getSteps()
+{
+	if (solved)
+	{
+		int i = -1;
+		long long now = result;
+		do {
+			i++;
+			//int *maze = genArray(now);
+			//for (int i = 0; i < 9; i++) {
+			//	cout << maze[i] << " ";
+			//	if (i % 3 == 2)
+			//		cout << endl;
+			//}
+			//cout << endl;
+			now = path[now];
+		} while (now != -1);
+
+		return i;
+	}
+	else {
+		return -1;
+	}
+}
+
+int EightPuzzle::getVisit()
+{
+	return visit;
 }
 
 

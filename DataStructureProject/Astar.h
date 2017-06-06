@@ -8,13 +8,10 @@ public:
 	void input(int *a, int *r);
 	void solve();
 	void output();
+	int getSteps();
+	int getVisit();
 	void reset();
 private:
-	int *puzzle, *target;
-	long long result;
-	int manhattan[9][9];
-	bool solved = false;
-	
 	struct state {
 		long long status;
 		int g;	//Depth
@@ -33,6 +30,12 @@ private:
 			return a->f > b->f;
 		}
 	};
+	int *puzzle, *target;
+	int visit = 0;
+	long long result;
+	int manhattan[9][9];
+	bool solved = false;
+	
 	stack<long long> out;
 	priority_queue<state*, vector<state*>, cmp> open;
 	unordered_set<long long> close;
