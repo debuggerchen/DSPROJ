@@ -1,0 +1,157 @@
+{
+    "name": "Disk",
+    "children": [{
+            "name": "C",
+            "children": [{
+                    "name": "Go",
+                    "size": 239
+                },
+                {
+                    "name": "Program File",
+                    "size": 5800
+                },
+                {
+                    "name": "Program File(x86)",
+                    "size": 11800
+                },
+                {
+                    "name": "Program Data",
+                    "size": 6040
+                },
+                {
+                    "name": "Windows",
+                    "size": 29100
+                },
+                {
+                    "name": "User",
+                    "size": 43800
+                }
+            ]
+        },
+        {
+            "name": "D",
+            "children": [{
+                    "name": "Program File(x86)",
+                    "children": [{
+                            "name": "Cheat Engine",
+                            "size": 38
+                        }, {
+                            "name": "Corsair",
+                            "size": 230
+                        }, {
+                            "name": "Microsoft Visual Studio 14.0",
+                            "size": 3800
+                        },
+                        {
+                            "name": "VMware",
+                            "size": 496
+                        }
+                    ]
+                },
+                {
+                    "name": "Program File",
+                    "children": [{
+                            "name": "IBM",
+                            "size": 1070
+                        },
+                        {
+                            "name": "JetBrains",
+                            "size": 1150
+                        },
+                        {
+                            "name": "Matlab",
+                            "size": 11300
+                        },
+                        {
+                            "name": "MySQL",
+                            "size": 343
+                        },
+                        {
+                            "name": "SASHome",
+                            "size": 7190
+                        },
+                        {
+                            "name": "Tableau",
+                            "size": 1080
+                        },
+                        {
+                            "name": "WireShark",
+                            "size": 168
+                        }
+                    ]
+                },
+
+                {
+                    "name": "GoPath",
+                    "size": 517
+                },
+                {
+                    "name": "texlive",
+                    "size": 4260
+                }
+            ]
+        },
+        {
+            "name": "E",
+            "children": [{
+                    "name": "Academy",
+                    "children": [{
+                        "name": "Contest",
+                        "size": 5150
+                    }, {
+                        "name": "Course",
+                        "size": 35700
+                    }, {
+                        "name": "TOEFL",
+                        "size": 30000
+                    }]
+                },
+                {
+                    "name": "VMSystem",
+                    "children": [{
+                            "name": "Ubuntu1704ServerV1",
+                            "size": 3410
+                        },
+                        {
+                            "name": "Ubuntu1704ServerV2",
+                            "size": 4536
+                        },
+                        {
+                            "name": "Ubuntu1704ServerV3",
+                            "size": 4360
+                        },
+                        {
+                            "name": "Ubuntu1704ServerV4",
+                            "size": 4360
+                        },
+                        {
+                            "name": "Win7",
+                            "size": 20800
+                        },
+                        {
+                            "name": "WinXp",
+                            "size": 3720
+                        },
+                        {
+                            "name": "Elementary OS",
+                            "size": 25300
+                        }
+                    ]
+                },
+
+                {
+                    "name": "IDA",
+                    "size": 246
+                },
+                {
+                    "name": "Kali 2016.2",
+                    "size": 42100
+                }
+            ]
+        }
+
+
+
+
+    ]
+}
